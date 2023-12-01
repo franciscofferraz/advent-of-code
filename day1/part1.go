@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"unicode"
 )
 
 func part1() {
@@ -34,22 +35,20 @@ func part1() {
 }
 
 func extractNumbersFromStr(line string) int {
-	var numbers string
+	var numbers []int
 
 	for _, char := range line {
-		if num, err := strconv.Atoi(string(char)); err == nil {
-			numbers += strconv.Itoa(num)
+		if ok := unicode.IsNumber(char); ok {
+			num, _ := strconv.Atoi(string(char))
+			numbers = append(numbers, num)
 		}
 	}
 
-	if numbers == "" {
+	if len(numbers) == 0 {
 		return 0
 	}
 
-	firstNum, _ := strconv.Atoi(string(numbers[0]))
-	lastNum, _ := strconv.Atoi(string(numbers[len(numbers)-1]))
-
-	concatenatedNum := fmt.Sprintf("%d%d", firstNum, lastNum)
+	concatenatedNum := fmt.Sprintf("%d%d", numbers[0], numbers[len(numbers)-1])
 	intNum, _ := strconv.Atoi(concatenatedNum)
 
 	return intNum
