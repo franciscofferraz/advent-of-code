@@ -9,6 +9,7 @@ import (
 )
 
 func part1() {
+	var numbers []int
 	var total int
 
 	f, err := os.Open("day1/input1.txt")
@@ -17,30 +18,27 @@ func part1() {
 	}
 	defer f.Close()
 
-	m := make(map[int]int)
-
 	scanner := bufio.NewScanner(f)
 	for i := 0; scanner.Scan(); i++ {
 		line := scanner.Text()
 
-		value := extractNumbersFromStr(line)
-
-		m[i] = value
+		number := extractNumbersFromStr(line)
+		numbers = append(numbers, number)
 	}
 
-	for _, number := range m {
+	for _, number := range numbers {
 		total += number
 	}
 
-	println(total)
+	fmt.Println(total)
 }
 
 func extractNumbersFromStr(line string) int {
 	var numbers string
 
 	for _, char := range line {
-		if _, err := strconv.Atoi(string(char)); err == nil {
-			numbers += string(char)
+		if num, err := strconv.Atoi(string(char)); err == nil {
+			numbers += strconv.Itoa(num)
 		}
 	}
 
