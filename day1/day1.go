@@ -45,19 +45,21 @@ func day1() {
 
 func extractNumbersFromStr(str string) int {
 	var numbers []int
-	var sum string
+	var charSum string
 
 	for _, char := range str {
 		if ok := unicode.IsNumber(char); ok {
 			num, _ := strconv.Atoi(string(char))
 			numbers = append(numbers, num)
 		} else {
-			sum += string(char)
+			charSum += string(char)
 			for value, num := range digitMap {
-				if strings.Contains(sum, value) {
+				if strings.Contains(charSum, value) {
 					numbers = append(numbers, num)
-					if len(sum)-1 > 0 {
-						sum = string(sum[len(sum)-1])
+					if len(charSum)-1 > 0 {
+						charSum = string(charSum[len(charSum)-1])
+					} else {
+						charSum = ""
 					}
 				}
 			}
