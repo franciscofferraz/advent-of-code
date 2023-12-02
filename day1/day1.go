@@ -72,57 +72,59 @@ func main() {
 
 func calibrate(str string) int {
 	var numbers []int
-	var buf strings.Builder
 
-	goto inner
+	numbers = append(numbers, getFirstNumber(str))
+	numbers = append(numbers, getLastNumber(str))
 
-inner:
-	for i := 0; i < len(str); i++ {
-		if unicode.IsNumber(rune(str[i])) {
-			num, _ := strconv.Atoi(string(str[i]))
-			numbers = append(numbers, num)
-			goto outer
-		} else {
-			buf.WriteString(string(str[i]))
-
-			if len(buf.String()) >= minLen {
-				for _, d := range digits {
-					if strings.HasSuffix(buf.String(), d.str) {
-						numbers = append(numbers, d.num)
-						buf.Reset()
-						goto outer
-					}
-				}
-			}
-		}
-	}
-	buf.Reset()
-
-outer:
-	for i := len(str) - 1; i >= 0; i-- {
-		if unicode.IsNumber(rune(str[i])) {
-			num, _ := strconv.Atoi(string(str[i]))
-			numbers = append(numbers, num)
-			goto end
-		} else {
-			buf.WriteString(string(str[i]))
-			if len(buf.String()) >= minLen {
-				for _, d := range reversedDigits {
-					if strings.HasSuffix(buf.String(), d.str) {
-						numbers = append(numbers, d.num)
-						buf.Reset()
-						goto end
-					}
-				}
-			}
-		}
-	}
-
-end:
 	if len(numbers) >= 1 {
 		concatenatedNum := numbers[0]*10 + numbers[len(numbers)-1]
 		return concatenatedNum
 	} else {
 		return 0
 	}
+}
+
+func getFirstNumber(str string) int {
+	var buf strings.Builder
+
+	for i := 0; i < len(str); i++ {
+		if unicode.IsNumber(rune(str[i])) {
+			num, _ := strconv.Atoi(string(str[i]))
+			return num
+		} else {
+			buf.WriteString(string(str[i]))
+
+			if len(buf.String()) >= minLen {
+				for _, d := range digits {
+					if strings.HasSuffix(buf.String(), d.str) {
+						return d.num
+					}
+				}
+			}
+		}
+	}
+
+	return 0
+}
+
+func getLastNumber(str string) int {
+	var buf strings.Builder
+
+	for i := len(str) - 1; i >= 0; i-- {
+		if unicode.IsNumber(rune(str[i])) {
+			num, _ := strconv.Atoi(string(str[i]))
+			return num
+		} else {
+			buf.WriteString(string(str[i]))
+			if len(buf.String()) >= minLen {
+				for _, d := range reversedDigits {
+					if strings.HasSuffix(buf.String(), d.str) {
+						return d.num
+					}
+				}
+			}
+		}
+	}
+
+	return 0
 }
