@@ -121,7 +121,6 @@ outer:
 end:
 	if len(numbers) >= 1 {
 		concatenatedNum := numbers[0]*10 + numbers[len(numbers)-1]
-		println(concatenatedNum)
 		return concatenatedNum
 	} else {
 		return 0
