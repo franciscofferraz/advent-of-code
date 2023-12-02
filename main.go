@@ -4,6 +4,7 @@ import (
 	"flag"
 
 	"github.com/franciscofferraz/advent-of-code/day1"
+	"github.com/franciscofferraz/advent-of-code/day2"
 )
 
 func main() {
@@ -19,5 +20,7 @@ func processDay(day int) {
 	switch day {
 	case 1:
 		day1.Run()
+	case 2:
+		day2.Run()
 	}
 }
