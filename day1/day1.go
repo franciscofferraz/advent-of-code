@@ -7,27 +7,34 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 	"unicode"
 )
 
-var digitMap = map[string]int{
-	"one":   1,
-	"two":   2,
-	"three": 3,
-	"four":  4,
-	"five":  5,
-	"six":   6,
-	"seven": 7,
-	"eight": 8,
-	"nine":  9,
+type digit struct {
+	str string
+	num int
+}
+
+var digits = []digit{
+	{"one", 1},
+	{"two", 2},
+	{"three", 3},
+	{"four", 4},
+	{"five", 5},
+	{"six", 6},
+	{"seven", 7},
+	{"eight", 8},
+	{"nine", 9},
 }
 
 func Run() {
-	day1()
+	main()
 }
 
-func day1() {
-	var total int
+func main() {
+	startTime := time.Now()
+	var answer int
 
 	f, err := os.Open("day1/input.txt")
 	if err != nil {
@@ -35,31 +42,34 @@ func day1() {
 	}
 	defer f.Close()
 
-	reader := bufio.NewScanner(f)
-	for reader.Scan() {
-		total += extractNumbersFromStr(reader.Text())
+	scanner := bufio.NewScanner(f)
+	for scanner.Scan() {
+		answer += calibrate(scanner.Text())
 	}
 
-	fmt.Println(total)
+	fmt.Println(answer)
+
+	used := time.Since(startTime)
+	fmt.Printf("Execution time: %s\n", used)
 }
 
-func extractNumbersFromStr(str string) int {
+func calibrate(str string) int {
 	var numbers []int
-	var charSum string
+	var tempBuffer string
 
 	for _, char := range str {
 		if ok := unicode.IsNumber(char); ok {
 			num, _ := strconv.Atoi(string(char))
 			numbers = append(numbers, num)
 		} else {
-			charSum += string(char)
-			for value, num := range digitMap {
-				if strings.Contains(charSum, value) {
-					numbers = append(numbers, num)
-					if len(charSum)-1 > 0 {
-						charSum = string(charSum[len(charSum)-1])
+			tempBuffer += string(char)
+			for _, d := range digits {
+				if strings.HasSuffix(tempBuffer, d.str) {
+					numbers = append(numbers, d.num)
+					if len(tempBuffer)-1 > 0 {
+						tempBuffer = string(tempBuffer[len(tempBuffer)-1])
 					} else {
-						charSum = ""
+						tempBuffer = ""
 					}
 				}
 			}
@@ -67,9 +77,8 @@ func extractNumbersFromStr(str string) int {
 	}
 
 	if len(numbers) >= 1 {
-		concatenatedNum := fmt.Sprintf("%d%d", numbers[0], numbers[len(numbers)-1])
-		intNum, _ := strconv.Atoi(concatenatedNum)
-		return intNum
+		concatenatedNum := numbers[0]*10 + numbers[len(numbers)-1]
+		return concatenatedNum
 	} else {
 		return 0
 	}
