@@ -2,7 +2,7 @@ package day2
 
 import "testing"
 
-func TestCheckGame(t *testing.T) {
+func TestPart1(t *testing.T) {
 	tests := []struct {
 		input    string
 		expected int
@@ -15,7 +15,27 @@ func TestCheckGame(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		result := checkGame(test.input)
+		result := part1(test.input)
+		if result != test.expected {
+			t.Errorf("For input %q, expected %d, but got %d", test.input, test.expected, result)
+		}
+	}
+}
+
+func TestPart2(t *testing.T) {
+	tests := []struct {
+		input    string
+		expected int
+	}{
+		{"Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green", 48},
+		{"Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue", 12},
+		{"Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red", 1560},
+		{"Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red", 630},
+		{"Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green", 36},
+	}
+
+	for _, test := range tests {
+		result := part2(test.input)
 		if result != test.expected {
 			t.Errorf("For input %q, expected %d, but got %d", test.input, test.expected, result)
 		}

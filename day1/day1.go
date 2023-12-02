@@ -64,7 +64,7 @@ func main() {
 		answer += calibrate(scanner.Text())
 	}
 
-	fmt.Println("Answer:", answer)
+	fmt.Println(answer)
 
 	used := time.Since(startTime)
 	fmt.Printf("Execution time: %s\n", used)

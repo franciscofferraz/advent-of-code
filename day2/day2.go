@@ -7,13 +7,12 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"time"
 )
 
 const (
-	red   = 12
-	green = 13
-	blue  = 14
+	maxRed   = 12
+	maxGreen = 13
+	maxBlue  = 14
 )
 
 func Run() {
@@ -21,8 +20,7 @@ func Run() {
 }
 
 func main() {
-	startTime := time.Now()
-	var answer int
+	var answer1, answer2 int
 
 	f, err := os.Open("day2/input.txt")
 	if err != nil {
@@ -32,16 +30,15 @@ func main() {
 
 	scanner := bufio.NewScanner(f)
 	for scanner.Scan() {
-		answer += checkGame(scanner.Text())
+		answer1 += part1(scanner.Text())
+		answer2 += part2(scanner.Text())
 	}
 
-	fmt.Println("Answer:", answer)
-
-	used := time.Since(startTime)
-	fmt.Printf("Execution time: %s\n", used)
+	fmt.Println("Part1 Answer:", answer1)
+	fmt.Println("Part2 Answer:", answer2)
 }
 
-func checkGame(str string) int {
+func part1(str string) int {
 	gameStr := strings.Split(str, ": ")
 
 	gameId, err := strconv.Atoi(gameStr[0][5:])
@@ -58,17 +55,17 @@ func checkGame(str string) int {
 				switch value {
 				case "red":
 					number, _ := strconv.Atoi(set_element[idx-1])
-					if number > red {
+					if number > maxRed {
 						return 0
 					}
 				case "green":
 					number, _ := strconv.Atoi(set_element[idx-1])
-					if number > green {
+					if number > maxGreen {
 						return 0
 					}
 				case "blue":
 					number, _ := strconv.Atoi(set_element[idx-1])
-					if number > blue {
+					if number > maxBlue {
 						return 0
 					}
 				}
@@ -77,4 +74,41 @@ func checkGame(str string) int {
 	}
 
 	return gameId
+}
+
+func part2(str string) int {
+	var red, green, blue int
+	var power int
+
+	gameStr := strings.Split(str, ": ")[1]
+
+	gameSets := strings.Split(gameStr, "; ")
+	for _, set := range gameSets {
+		set_elements := strings.Split(set, ", ")
+		for _, current := range set_elements {
+			set_element := strings.Split(current, " ")
+			for idx, value := range set_element {
+				switch value {
+				case "red":
+					number, _ := strconv.Atoi(set_element[idx-1])
+					if number > red {
+						red = number
+					}
+				case "green":
+					number, _ := strconv.Atoi(set_element[idx-1])
+					if number > green {
+						green = number
+					}
+				case "blue":
+					number, _ := strconv.Atoi(set_element[idx-1])
+					if number > blue {
+						blue = number
+					}
+				}
+			}
+		}
+	}
+	power = red * green * blue
+
+	return power
 }
