@@ -7,7 +7,7 @@ func TestCalibrate(t *testing.T) {
 		input    string
 		expected int
 	}{
-		{"8fivedlxzgxxflbltteighttwochtxlfjx", 82},
+		{"two1nine", 29},
 		{"onerbfkf4threeone", 11},
 		{"seveneightnine", 79},
 		{"invalid number", 0},

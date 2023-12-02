@@ -11,6 +11,11 @@ import (
 	"unicode"
 )
 
+const (
+	minLen = 3
+	maxLen = 5
+)
+
 type digit struct {
 	str string
 	num int
@@ -26,6 +31,18 @@ var digits = []digit{
 	{"seven", 7},
 	{"eight", 8},
 	{"nine", 9},
+}
+
+var reversedDigits = []digit{
+	{"eno", 1},
+	{"owt", 2},
+	{"eerht", 3},
+	{"ruof", 4},
+	{"evif", 5},
+	{"xis", 6},
+	{"neves", 7},
+	{"thgie", 8},
+	{"enin", 9},
 }
 
 func Run() {
@@ -55,29 +72,56 @@ func main() {
 
 func calibrate(str string) int {
 	var numbers []int
-	var tempBuffer string
+	var buf strings.Builder
 
-	for _, char := range str {
-		if ok := unicode.IsNumber(char); ok {
-			num, _ := strconv.Atoi(string(char))
+	goto inner
+
+inner:
+	for i := 0; i < len(str); i++ {
+		if unicode.IsNumber(rune(str[i])) {
+			num, _ := strconv.Atoi(string(str[i]))
 			numbers = append(numbers, num)
+			goto outer
 		} else {
-			tempBuffer += string(char)
-			for _, d := range digits {
-				if strings.HasSuffix(tempBuffer, d.str) {
-					numbers = append(numbers, d.num)
-					if len(tempBuffer)-1 > 0 {
-						tempBuffer = string(tempBuffer[len(tempBuffer)-1])
-					} else {
-						tempBuffer = ""
+			buf.WriteString(string(str[i]))
+
+			if len(buf.String()) >= minLen {
+				for _, d := range digits {
+					if strings.HasSuffix(buf.String(), d.str) {
+						numbers = append(numbers, d.num)
+						buf.Reset()
+						goto outer
+					}
+				}
+			}
+		}
+	}
+	buf.Reset()
+
+outer:
+	for i := len(str) - 1; i >= 0; i-- {
+		if unicode.IsNumber(rune(str[i])) {
+			num, _ := strconv.Atoi(string(str[i]))
+			numbers = append(numbers, num)
+			goto end
+		} else {
+			buf.WriteString(string(str[i]))
+			if len(buf.String()) >= minLen {
+				for _, d := range reversedDigits {
+					if strings.HasSuffix(buf.String(), d.str) {
+						numbers = append(numbers, d.num)
+						buf.Reset()
+						goto end
 					}
 				}
 			}
 		}
 	}
 
+end:
 	if len(numbers) >= 1 {
 		concatenatedNum := numbers[0]*10 + numbers[len(numbers)-1]
+		println(concatenatedNum)
 		return concatenatedNum
 	} else {
 		return 0
