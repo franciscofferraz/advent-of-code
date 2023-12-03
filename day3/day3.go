@@ -57,11 +57,12 @@ func part1(data []string) int {
 	for lineIdx, line := range data {
 		numsIdx := r.FindAllStringIndex(line, -1)
 		for _, numIdx := range numsIdx {
-			num, _ := strconv.Atoi(line[numIdx[0]:numIdx[1]])
 			var hasTop, hasBottom, hasLeft, hasRight bool
+			num, _ := strconv.Atoi(line[numIdx[0]:numIdx[1]])
 
 			hasRight = checkRight(numIdx, line)
 			hasLeft = checkLeft(numIdx, line)
+
 			if lineIdx != 0 {
 				hasTop = isAdjacentToSymbol(numIdx, data[lineIdx-1])
 			}
