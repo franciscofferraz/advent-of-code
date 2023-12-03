@@ -28,3 +28,30 @@ func TestPart1(t *testing.T) {
 		}
 	}
 }
+
+func TestPart2(t *testing.T) {
+	tests := []struct {
+		input    []string
+		expected int
+	}{
+		{[]string{
+			"467..114..",
+			"...*......",
+			"..35..633.",
+			"......#...",
+			"617*......",
+			".....+.58.",
+			"..592.....",
+			"......755.",
+			"...$.*....",
+			".664.598..",
+		}, 467835},
+	}
+
+	for _, test := range tests {
+		result := part2(test.input)
+		if result != test.expected {
+			t.Errorf("For input %q, expected %d, but got %d", test.input, test.expected, result)
+		}
+	}
+}
