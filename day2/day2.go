@@ -41,9 +41,9 @@ func main() {
 func part1(str string) int {
 	gameStr := strings.Split(str, ": ")
 
-	gameId, err := strconv.Atoi(gameStr[0][5:])
+	gameId, err := strconv.Atoi(strings.TrimPrefix(gameStr[0], "Game "))
 	if err != nil {
-		gameId = 0
+		return 0
 	}
 
 	gameSets := strings.Split(gameStr[1], "; ")
@@ -87,22 +87,24 @@ func part2(str string) int {
 		set_elements := strings.Split(set, ", ")
 		for _, current := range set_elements {
 			set_element := strings.Split(current, " ")
-			for idx, value := range set_element {
-				switch value {
-				case "red":
-					number, _ := strconv.Atoi(set_element[idx-1])
-					if number > red {
-						red = number
-					}
-				case "green":
-					number, _ := strconv.Atoi(set_element[idx-1])
-					if number > green {
-						green = number
-					}
-				case "blue":
-					number, _ := strconv.Atoi(set_element[idx-1])
-					if number > blue {
-						blue = number
+			for idx := 0; idx < len(set_element); idx++ {
+				if idx > 0 {
+					switch set_element[idx] {
+					case "red":
+						number, _ := strconv.Atoi(set_element[idx-1])
+						if number > red {
+							red = number
+						}
+					case "green":
+						number, _ := strconv.Atoi(set_element[idx-1])
+						if number > green {
+							green = number
+						}
+					case "blue":
+						number, _ := strconv.Atoi(set_element[idx-1])
+						if number > blue {
+							blue = number
+						}
 					}
 				}
 			}
