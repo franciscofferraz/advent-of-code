@@ -3,7 +3,6 @@ package day1
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -45,17 +44,13 @@ var reversedDigits = []digit{
 	{"enin", 9},
 }
 
-func Run() {
-	main()
-}
-
-func main() {
-	startTime := time.Now()
+func Run(part int) {
 	var answer int
+	startTime := time.Now()
 
 	f, err := os.Open("day1/input.txt")
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 	defer f.Close()
 
@@ -64,9 +59,11 @@ func main() {
 		answer += calibrate(scanner.Text())
 	}
 
-	fmt.Println(answer)
-
 	used := time.Since(startTime)
+	if part == 1 {
+		fmt.Print("No part 1 for this day, sorry!\n")
+	}
+	fmt.Printf("Day 1 Part 2 Answer: %d\n", answer)
 	fmt.Printf("Execution time: %s\n", used)
 }
 

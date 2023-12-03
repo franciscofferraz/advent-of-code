@@ -3,10 +3,10 @@ package day2
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 const (
@@ -15,27 +15,32 @@ const (
 	maxBlue  = 14
 )
 
-func Run() {
-	main()
-}
-
-func main() {
-	var answer1, answer2 int
+func Run(part int) {
+	var answer int
+	startTime := time.Now()
 
 	f, err := os.Open("day2/input.txt")
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 	defer f.Close()
 
 	scanner := bufio.NewScanner(f)
-	for scanner.Scan() {
-		answer1 += part1(scanner.Text())
-		answer2 += part2(scanner.Text())
+	switch part {
+	case 1:
+		for scanner.Scan() {
+			answer += part1(scanner.Text())
+		}
+
+	case 2:
+		for scanner.Scan() {
+			answer += part1(scanner.Text())
+		}
 	}
 
-	fmt.Println("Part1 Answer:", answer1)
-	fmt.Println("Part2 Answer:", answer2)
+	usedTime := time.Since(startTime)
+	fmt.Printf("Day 2 Part %d Answer: %d\n", part, answer)
+	fmt.Printf("Execution time: %s\n", usedTime)
 }
 
 func part1(str string) int {

@@ -2,14 +2,40 @@ package day3
 
 import (
 	"bufio"
+	"fmt"
 	"log"
 	"os"
 	"regexp"
 	"strconv"
+	"time"
 )
 
-func Run() {
-	main()
+func Run(part int) {
+	var answer int
+	var data []string
+	startTime := time.Now()
+
+	f, err := os.Open("day3/input.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer f.Close()
+
+	scanner := bufio.NewScanner(f)
+	for scanner.Scan() {
+		data = append(data, scanner.Text())
+	}
+
+	switch part {
+	case 1:
+		answer = part1(data)
+	case 2:
+		answer = part2(data)
+	}
+
+	usedTime := time.Since(startTime)
+	fmt.Printf("Day 2 Part %d Answer: %d\n", part, answer)
+	fmt.Printf("Execution time: %s\n", usedTime)
 }
 
 var symbolsMap = map[byte]bool{
@@ -34,21 +60,7 @@ type GearPart struct {
 }
 
 func main() {
-	var data []string
 
-	f, err := os.Open("day3/input.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer f.Close()
-
-	scanner := bufio.NewScanner(f)
-	for scanner.Scan() {
-		data = append(data, scanner.Text())
-	}
-
-	println("Part1 Answer:", part1(data))
-	println("Part2 Answer:", part2(data))
 }
 
 func part1(data []string) int {
@@ -88,11 +100,11 @@ func part2(data []string) int {
 
 	for lineIdx, line := range data {
 		gears := reGear.FindAllStringIndex(line, -1)
+
 		for _, gear := range gears {
 			gearIdx := gear[0]
 
 			var gearParts []GearPart
-
 			addGearParts := func(parts [][]int, lineOffset int) {
 				for _, part := range parts {
 					gearPart := GearPart{
@@ -113,6 +125,7 @@ func part2(data []string) int {
 			if lineIdx != 0 {
 				addGearParts(reDigits.FindAllStringIndex(data[lineIdx-1], -1), -1)
 			}
+
 			if lineIdx != len(data)-1 {
 				addGearParts(reDigits.FindAllStringIndex(data[lineIdx+1], -1), 1)
 			}
