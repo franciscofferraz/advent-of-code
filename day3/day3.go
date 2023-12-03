@@ -3,25 +3,18 @@ package day3
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"os"
 	"regexp"
 	"strconv"
 	"time"
 )
 
-func Run(part int) {
+func Run(part int, file *os.File) {
 	var answer int
 	var data []string
 	startTime := time.Now()
 
-	f, err := os.Open("day3/input.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer f.Close()
-
-	scanner := bufio.NewScanner(f)
+	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		data = append(data, scanner.Text())
 	}

@@ -2,6 +2,8 @@ package main
 
 import (
 	"flag"
+	"fmt"
+	"os"
 
 	"github.com/franciscofferraz/advent-of-code/day1"
 	"github.com/franciscofferraz/advent-of-code/day2"
@@ -28,12 +30,20 @@ func main() {
 }
 
 func processDay(day int, part int) {
+	filePath := fmt.Sprintf("day%d/input.txt", day)
+	file, err := os.Open(filePath)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
 	switch day {
 	case 1:
-		day1.Run(part)
+		defer file.Close()
+		day1.Run(part, file)
 	case 2:
-		day2.Run(part)
+		day2.Run(part, file)
 	case 3:
-		day3.Run(part)
+		day3.Run(part, file)
 	}
 }

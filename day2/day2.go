@@ -15,17 +15,11 @@ const (
 	maxBlue  = 14
 )
 
-func Run(part int) {
+func Run(part int, file *os.File) {
 	var answer int
 	startTime := time.Now()
 
-	f, err := os.Open("day2/input.txt")
-	if err != nil {
-		panic(err)
-	}
-	defer f.Close()
-
-	scanner := bufio.NewScanner(f)
+	scanner := bufio.NewScanner(file)
 	switch part {
 	case 1:
 		for scanner.Scan() {
@@ -34,7 +28,7 @@ func Run(part int) {
 
 	case 2:
 		for scanner.Scan() {
-			answer += part1(scanner.Text())
+			answer += part2(scanner.Text())
 		}
 	}
 

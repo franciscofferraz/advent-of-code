@@ -44,17 +44,11 @@ var reversedDigits = []digit{
 	{"enin", 9},
 }
 
-func Run(part int) {
+func Run(part int, file *os.File) {
 	var answer int
 	startTime := time.Now()
 
-	f, err := os.Open("day1/input.txt")
-	if err != nil {
-		panic(err)
-	}
-	defer f.Close()
-
-	scanner := bufio.NewScanner(f)
+	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		answer += calibrate(scanner.Text())
 	}
