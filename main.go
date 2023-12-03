@@ -5,6 +5,7 @@ import (
 
 	"github.com/franciscofferraz/advent-of-code/day1"
 	"github.com/franciscofferraz/advent-of-code/day2"
+	"github.com/franciscofferraz/advent-of-code/day3"
 )
 
 func main() {
@@ -22,5 +23,7 @@ func processDay(day int) {
 		day1.Run()
 	case 2:
 		day2.Run()
+	case 3:
+		day3.Run()
 	}
 }
