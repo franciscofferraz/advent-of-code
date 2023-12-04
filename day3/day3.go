@@ -27,7 +27,7 @@ func Run(part int, file *os.File) {
 	}
 
 	usedTime := time.Since(startTime)
-	fmt.Printf("Day 2 Part %d Answer: %d\n", part, answer)
+	fmt.Printf("Day 3 Part %d Answer: %d\n", part, answer)
 	fmt.Printf("Execution time: %s\n", usedTime)
 }
 
@@ -50,10 +50,6 @@ type GearPart struct {
 	startIdx int
 	endIdx   int
 	value    int
-}
-
-func main() {
-
 }
 
 func part1(data []string) int {
