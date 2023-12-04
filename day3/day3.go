@@ -26,9 +26,8 @@ func Run(part int, file *os.File) {
 		answer = part2(data)
 	}
 
-	usedTime := time.Since(startTime)
 	fmt.Printf("Day 3 Part %d Answer: %d\n", part, answer)
-	fmt.Printf("Execution time: %s\n", usedTime)
+	fmt.Printf("Execution time: %s\n", time.Since(startTime))
 }
 
 var symbolsMap = map[byte]bool{

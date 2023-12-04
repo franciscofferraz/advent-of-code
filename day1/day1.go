@@ -53,12 +53,11 @@ func Run(part int, file *os.File) {
 		answer += calibrate(scanner.Text())
 	}
 
-	used := time.Since(startTime)
 	if part == 1 {
 		fmt.Print("No part 1 for this day, sorry!\n")
 	}
 	fmt.Printf("Day 1 Part 2 Answer: %d\n", answer)
-	fmt.Printf("Execution time: %s\n", used)
+	fmt.Printf("Execution time: %s\n", time.Since(startTime))
 }
 
 func calibrate(str string) int {

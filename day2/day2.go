@@ -32,9 +32,8 @@ func Run(part int, file *os.File) {
 		}
 	}
 
-	usedTime := time.Since(startTime)
 	fmt.Printf("Day 2 Part %d Answer: %d\n", part, answer)
-	fmt.Printf("Execution time: %s\n", usedTime)
+	fmt.Printf("Execution time: %s\n", time.Since(startTime))
 }
 
 func part1(str string) int {
