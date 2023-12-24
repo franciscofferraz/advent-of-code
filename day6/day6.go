@@ -33,8 +33,7 @@ func Run(part int, file *os.File) {
 }
 
 func part1(lines []string) int {
-	var result int
-	races := make([]int, 4)
+	var result = 1
 
 	durations := r.FindAllString(lines[0], -1)
 	distances := r.FindAllString(lines[1], -1)
@@ -52,6 +51,8 @@ func part1(lines []string) int {
 		distanceInts = append(distanceInts, distance)
 	}
 
+	races := make([]int, len(durationInts))
+
 	for idx, duration := range durationInts {
 		for i := 0; i <= duration; i++ {
 			speed := i * 1
@@ -63,7 +64,10 @@ func part1(lines []string) int {
 		}
 	}
 
-	result = races[0] * races[1] * races[2] * races[3]
+	for _, race := range races {
+		result = result * race
+	}
+
 	return result
 }
 
