@@ -9,6 +9,7 @@ import (
 	"github.com/franciscofferraz/advent-of-code/day2"
 	"github.com/franciscofferraz/advent-of-code/day3"
 	"github.com/franciscofferraz/advent-of-code/day4"
+	"github.com/franciscofferraz/advent-of-code/day5"
 )
 
 func main() {
@@ -48,5 +49,7 @@ func processDay(day int, part int) {
 		day3.Run(part, file)
 	case 4:
 		day4.Run(part, file)
+	case 5:
+		day5.Run(part, file)
 	}
 }
