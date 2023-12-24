@@ -6,6 +6,7 @@ import (
 	"os"
 	"regexp"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -71,6 +72,27 @@ func part1(lines []string) int {
 	return result
 }
 
-func part2(data []string) int {
-	return 0
+func part2(lines []string) int {
+	durationsLine := strings.Fields(lines[0])
+	distancesLine := strings.Fields(lines[1])
+
+	duration, _ := strconv.Atoi(strings.Join(durationsLine[1:], ""))
+	distance, _ := strconv.Atoi(strings.Join(distancesLine[1:], ""))
+
+	// Calculate result
+	result := 1
+	race := 0
+
+	for i := 0; i <= duration; i++ {
+		speed := i * 1
+		score := speed * (duration - i)
+
+		if score > distance {
+			race++
+		}
+	}
+
+	result *= race
+
+	return result
 }
